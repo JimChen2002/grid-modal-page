@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 
-const MODAL_A = 'modal_a';
-const MODAL_B = 'modal_b';
-
-const DEFAULT_TITLE = 'Default title';
-
 class Forms extends Component {
   constructor(props) {
     super(props);
@@ -18,11 +13,13 @@ class Forms extends Component {
     };
   }
 
+  // close or open the modal
   toggleModal = event => {
     const { isOpen } = this.state;
     this.setState({ isOpen: !isOpen });
   }
 
+  // use SHA256 to hash any string
   async sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -30,18 +27,21 @@ class Forms extends Component {
     return hashArray.map((b) => ('00' + b.toString(16)).slice(-2)).join('');
   }
 
+  // hash the password twice to enhance security
   async hashPassword(password) {
     let password_hashed = await this.sha256(password);
     password_hashed = await this.sha256(password_hashed);
     return password_hashed;
   }
 
+  // function that checks data integrity and creates a new user
+  // @param [updateGridRow]: function that updates row data
   async createUser(updateGridRow) {
     if(
-      this.ref.username.current == null ||
-      this.ref.age.current == null ||
-      this.ref.password.current == null ||
-      this.ref.password_confirm.current == null
+      !this.ref.username.current.value ||
+      !this.ref.age.current.value ||
+      !this.ref.password.current.value ||
+      !this.ref.password_confirm.current.value
     ) {
       alert('Please fill in all the blanks');
       return;
@@ -73,9 +73,6 @@ class Forms extends Component {
 
   render() {
     const { isOpen } = this.state;
-    console.log(this.hashPassword("1234578"));
-    console.log(this.hashPassword("password"));
-    console.log(this.hashPassword("qwertyui"));
     return (
       <div>
         <button className="btn btn-primary" onClick={this.toggleModal}>Create new user</button>
@@ -116,6 +113,7 @@ class Forms extends Component {
                 Password:&nbsp;
                 <input
                   ref={this.ref.password}
+                  placeholder='at least 8 characters'
                   type="password"
                 />
               </label>
@@ -126,10 +124,9 @@ class Forms extends Component {
                 <input
                   ref={this.ref.password_confirm}
                   type="password"
-                  placeholder='at least 8 characters'
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
-                      this.next_step();
+                      this.createUser(this.props.updateGridRow)
                     }
                   }}
                 />

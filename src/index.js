@@ -11,6 +11,7 @@ const appElement = document.getElementById('root');
 Modal.setAppElement('#root');
 
 const App = () => {
+  // initial row data
   const [rowData, updateRowData] = useState([
     { username: 'int_jim', age: 18, password_digest: "a336411ebf69964e4c866397d20eafb38dd8ee24c57b835748494eb595dff324" },
     { username: 'admin', age: 12, password_digest: "113459eb7bb31bddee85ade5230d6ad5d8b2fb52879e00a84ff6ae1067a210d3" },
@@ -18,12 +19,14 @@ const App = () => {
   ]);
   const gridRef = useRef(null);
 
+  // column definitions
   const [columnDefs] = useState([
     { field: 'username', sortable: true, filter: true, checkboxSelection: true, editable: true },
     { field: 'age', sortable: true, filter: true, editable: true },
     { field: 'password_digest', flex: 1},
   ]);
 
+  // function that deletes all selected rows
   const onButtonClick = e => {
     const selectedNodes = gridRef.current.api.getSelectedNodes();
     let newRowData = [];
