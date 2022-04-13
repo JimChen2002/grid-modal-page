@@ -9,3 +9,5 @@ Install the dependency with
 Then run the app with
 
 `npm start`
+
+Then the page will open on your default browser

@@ -74,72 +74,92 @@ class Forms extends Component {
   render() {
     const { isOpen } = this.state;
     return (
-      <div>
-        <button className="btn btn-primary" onClick={this.toggleModal}>Create new user</button>
-        <Modal
-          id="modal_with_forms"
-          isOpen={isOpen}
-          closeTimeoutMS={150}
-          contentLabel="modalB"
-          shouldCloseOnOverlayClick={true}
-          onRequestClose={this.toggleModal}
-          aria={{
-            labelledby: "heading",
-            describedby: "fulldescription"
-          }}>
-          <h1 id="heading">Create new user</h1>
-          <div id="fulldescription" tabIndex="0" role="document">
-            <p>
-              <label>
-                Username:&nbsp;
-                <input
-                  ref={this.ref.username}
-                  type="text"
-                  autoFocus={true}
-                />
-              </label>
-            </p>
-            <p>
-              <label>
-                Age:&nbsp;
-                <input
-                  ref={this.ref.age}
-                  type="number"
-                />
-              </label>
-            </p>
-            <p>
-              <label>
-                Password:&nbsp;
-                <input
-                  ref={this.ref.password}
-                  placeholder='at least 8 characters'
-                  type="password"
-                />
-              </label>
-            </p>
-            <p>
-              <label>
-                Confirm your password:&nbsp;
-                <input
-                  ref={this.ref.password_confirm}
-                  type="password"
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') {
-                      this.createUser(this.props.updateGridRow)
-                    }
-                  }}
-                />
-              </label>
-            </p>
-            <button
-              onClick={()=>this.createUser(this.props.updateGridRow)}
-            >
-              Confirm
-            </button>
+      <>
+        <div>
+          <Modal
+            id="modal_with_forms"
+            isOpen={isOpen}
+            closeTimeoutMS={150}
+            contentLabel="modalB"
+            shouldCloseOnOverlayClick={true}
+            onRequestClose={this.toggleModal}
+            aria={{
+              labelledby: "heading",
+              describedby: "fulldescription"
+            }}>
+            <h1 id="heading">Create new user</h1>
+            <div id="fulldescription" tabIndex="0" role="document">
+              <p>
+                <label>
+                  Username:&nbsp;
+                  <input
+                    ref={this.ref.username}
+                    type="text"
+                    autoFocus={true}
+                  />
+                </label>
+              </p>
+              <p>
+                <label>
+                  Age:&nbsp;
+                  <input
+                    ref={this.ref.age}
+                    type="number"
+                  />
+                </label>
+              </p>
+              <p>
+                <label>
+                  Password:&nbsp;
+                  <input
+                    ref={this.ref.password}
+                    placeholder='at least 8 characters'
+                    type="password"
+                  />
+                </label>
+              </p>
+              <p>
+                <label>
+                  Confirm your password:&nbsp;
+                  <input
+                    ref={this.ref.password_confirm}
+                    type="password"
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        this.createUser(this.props.updateGridRow)
+                      }
+                    }}
+                  />
+                </label>
+              </p>
+              <button
+                className='waves-effect waves-light btn'
+                onClick={()=>this.createUser(this.props.updateGridRow)}
+              >
+                Confirm
+              </button>
+            </div>
+          </Modal>
+        </div>
+        <br></br><br></br><br></br>
+        <div className='row'>
+          <div className='col s4'>
+            {
+              !this.state.isOpen && (
+                <button className="waves-effect waves-light align-left btn" onClick={this.toggleModal}>Create new user</button>
+              )
+            }
           </div>
-        </Modal>
-      </div>
+          <div className='col s4'></div>
+          <div className='col s4 right-align'>
+            {
+              !this.state.isOpen && (
+                <button className='waves-effect waves-light btn' onClick={this.props.onClickDelete}>Delete selected rows</button>
+              )
+            }
+          </div>
+        </div>
+      </>
     );
   }
 }

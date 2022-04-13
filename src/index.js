@@ -42,15 +42,14 @@ const App = () => {
   }
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 400, width: 1000 }}>
-      <button onClick={onButtonClick}>Delete selected rows</button>
-      <Forms updateGridRow={updateRowData} />
+    <div className="ag-theme-alpine" style={{ height: 400 }}>
       <AgGridReact 
         ref={gridRef}
         rowData={rowData} 
         columnDefs={columnDefs}
         rowSelection="multiple">
       </AgGridReact>
+      <Forms updateGridRow={updateRowData} onClickDelete={onButtonClick} />
     </div>
   );
 };
